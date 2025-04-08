@@ -84,8 +84,42 @@ The training code is located at the top of `full_inference_and_eval.py` (or in a
 ### Evaluate Entire Test Set
 ```bash
 # In full_inference_and_eval.py set run_mode='folder' add path to test_dir under data/extracted
+```
 python inference.py
 ```
+#Prcoessing needed for inference
+```
+# --- CONFIG ---
+class_names = ['Bear', 'Brown bear', 'Bull', 'Butterfly', 'Camel', 'Canary', 'Caterpillar', 'Cattle', 'Centipede', 
+               'Cheetah', 'Chicken', 'Crab', 'Crocodile', 'Deer', 'Duck', 'Eagle', 'Elephant', 'Fish', 'Fox', 
+               'Frog', 'Giraffe', 'Goat', 'Goldfish', 'Goose', 'Hamster', 'Harbor seal', 'Hedgehog', 'Hippopotamus', 
+               'Horse', 'Jaguar', 'Jellyfish', 'Kangaroo', 'Koala', 'Ladybug', 'Leopard', 'Lion', 'Lizard', 'Lynx', 
+               'Magpie', 'Monkey', 'Moths and butterflies', 'Mouse', 'Mule', 'Ostrich', 'Otter', 'Owl', 'Panda', 
+               'Parrot', 'Penguin', 'Pig', 'Polar bear', 'Rabbit', 'Raccoon', 'Raven', 'Red panda', 'Rhinoceros', 
+               'Scorpion', 'Sea lion', 'Sea turtle', 'Seahorse', 'Shark', 'Sheep', 'Shrimp', 'Snail', 'Snake', 
+               'Sparrow', 'Spider', 'Squid', 'Squirrel', 'Starfish', 'Swan', 'Tick', 'Tiger', 'Tortoise', 'Turkey', 
+               'Turtle', 'Whale', 'Woodpecker', 'Worm', 'Zebra']
+
+model_path = 'best_model.pth'
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# --- Load model ---
+model = models.resnet152(pretrained=False)
+model.fc = nn.Linear(model.fc.in_features, len(class_names))
+model.load_state_dict(torch.load(model_path, map_location=device))
+model.to(device)
+model.eval()
+
+# --- Common transforms ---
+image_transforms = transforms.Compose([
+    transforms.Resize(256),
+    transforms.CenterCrop(224),
+    transforms.ToTensor(),
+    transforms.Normalize([0.485, 0.456, 0.406],
+                         [0.229, 0.224, 0.225])
+])
+```
+
 - Computes overall accuracy and per-class accuracy.
 - Plots a confusion matrix for error analysis.
 

@@ -146,7 +146,7 @@ def evaluate_test_directory(model, test_dir):
 run_mode = 'image'  # or 'folder'
 
 if run_mode == 'image':
-    image_path = '/kaggle/working/data/extracted/test/Bear/0df78ee76bafd3a9.jpg'
+    image_path = 'data/extracted/test/Bear/0df78ee76bafd3a9.jpg'
     classify_single_image(model, image_path)
 
 elif run_mode == 'folder':

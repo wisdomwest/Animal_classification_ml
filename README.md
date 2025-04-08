@@ -82,12 +82,14 @@ The training code is located at the top of `full_inference_and_eval.py` (or in a
 
 ## Evaluation & Inference
 ### Evaluate Entire Test Set
-```bash
+
 # In full_inference_and_eval.py set run_mode='folder' add path to test_dir under data/extracted
+
 ```
 python inference.py
 ```
 #Prcoessing needed for inference
+
 ```
 # --- CONFIG ---
 class_names = ['Bear', 'Brown bear', 'Bull', 'Butterfly', 'Camel', 'Canary', 'Caterpillar', 'Cattle', 'Centipede', 
@@ -124,8 +126,9 @@ image_transforms = transforms.Compose([
 - Plots a confusion matrix for error analysis.
 
 ### Classify a Single Image
-```bash
+
 # In full_inference_and_eval.py set run_mode='image' add path to image under data/extracted/test_dir
+```
 python full_inference_and_eval.py
 ```
 - Displays the input image.
